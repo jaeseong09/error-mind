@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+
+
+@theme {
+  /* ================================
+    🖥️ 터미널 (랜딩 페이지 전용)
+     ================================ */
+  --color-terminal-bg: #1a1a2e;         /* 터미널 바디 배경 */
+  --color-terminal-bar: #252540;        /* 타이틀 바 배경 (● ● ●) */
+  --color-terminal-border: #2a2a3d;     /* 터미널 테두리 */
+  --color-terminal-input: #3a3a50;      /* 입력창 테두리 */
+
+  /* ================================
+    🎨 배경 레이어 (내부 웹 UI 페이지)
+    깊이: base < surface < elevated < overlay
+     ================================ */
+  --color-bg-base: #0a0a0f;            /* 페이지 전체 배경 (가장 어두움) */
+  --color-bg-surface: #12121a;         /* 카드, 사이드바, 패널 */
+  --color-bg-elevated: #1a1a25;        /* 모달, 드롭다운, 호버 */
+  --color-bg-overlay: #252530;         /* 인풋 필드, 코드 블록 배경 */
+  --color-bg-terminal: #0d0d14;        /* 터미널 윈도우 내부 (코드 블록) */
+  --color-bg-sidebar: #2a1f4f;
+
+  /* ================================
+    🟣 포인트 컬러 (네온 보라)
+     ================================ */
+  --color-primary: #7c3aed;            /* 메인 CTA, 링크, 활성 상태 */
+  --color-primary-hover: #8b5cf6;      /* 버튼 호버 */
+  --color-primary-muted: #6d28d9;      /* 선택된 탭, 사이드바 활성 */
+  --color-primary-subtle: rgba(124,58,237,0.15); /* 태그 배경, 살짝 강조 */
+  --color-primary-glow: rgba(124,58,237,0.4);    /* 네온 글로우 (포커스, 로고) */
+
+  /* ================================
+    🔴🟡🟢🔵 상태 컬러
+     ================================ */
+  --color-semantic-error: #f85149;      /* 에러, 미해결, 삭제 */
+  --color-semantic-warning: #d29922;    /* 경고, 주의 */
+  --color-semantic-success: #3fb950;    /* 해결됨, 성공, 채택 */
+  --color-semantic-info: #58a6ff;       /* 정보, 안내 */
+
+  /* 상태 배경 (태그, 하이라이트용) */
+  --color-semantic-error-subtle: rgba(248,81,73,0.15);
+  --color-semantic-warning-subtle: rgba(210,153,34,0.15);
+  --color-semantic-success-subtle: rgba(63,185,80,0.15);
+
+  /* ================================
+    ✏️ 텍스트 컬러 (밝기 계층)
+    밝기: primary > secondary > tertiary
+     ================================ */
+  --color-text-primary: #e4e4e7;       /* 주요 텍스트 (제목, 본문) */
+  --color-text-secondary: #8b8b9e;     /* 보조 텍스트 (설명, 날짜) */
+  --color-text-tertiary: #5a5a6e;      /* 비활성, 플레이스홀더 */
+  --color-text-terminal: #c0c0d0;      /* 터미널 전용 텍스트 */
+  --color-text-point: #a165fa;         /*글자포인트*/ 
+  --color-text-hover: #a773ee;         /*글자 호버*/
+
+  /* ================================
+    🔲 테두리
+     ================================ */
+  --color-border-default: #2a2a35;     /* 카드, 인풋 테두리 */
+  --color-border-muted: #1e1e28;       /* 구분선, 약한 테두리 */
+
+  /* ================================
+    🔤 폰트
+     ================================ */
+  --font-sans: 'IBM Plex Sans KR', 'IBM Plex Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
