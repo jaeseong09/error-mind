@@ -1,4 +1,5 @@
-import ProjectsToggle from "@/components/ProjectToggle";
+import ErrorMessageInput from "@/components/ErrorMessageInput";
+import ProjectsToggle from "@/components/ProjectsToggle";
 
 export default function Errors(){
   return(
@@ -8,6 +9,23 @@ export default function Errors(){
 
       <p className="text-text-tertiary text-xl font-mono mb-2"><span className="text-lg text-primary mr-2">❯</span>project<span className="pl-1 text-red-400">*</span></p>
       <ProjectsToggle></ProjectsToggle>
+
+      <p className="text-text-tertiary text-xl font-mono mb-2 mt-5"><span className="text-lg text-primary mr-2">❯</span>error_message<span className="pl-1 text-red-400">*</span></p>
+      <ErrorMessageInput></ErrorMessageInput>
+
+      <p className="text-text-tertiary text-xl font-mono mb-2 mt-5"><span className="text-lg text-primary mr-2">❯</span>context<span className="pl-1 text-gray-700">(optional)</span></p>
+      <input type="text"  className="border border-terminal-input  p-3 cursor-text w-full  bg-bg-elevated text-base"/>
+
+      <div className="flex gap-10 mt-5">
+        <div className="flex w-1/2">
+          <p className="text-text-tertiary text-xl font-mono mb-2"><span className="text-lg text-primary mr-2">❯</span>tags</p>
+          
+        </div>
+
+        <div className="flex w-1/2">
+          <p className="text-text-tertiary text-xl font-mono mb-2"><span className="text-lg text-primary mr-2">❯</span>visibility</p>
+        </div>
+      </div>
     </div>
   )
 }

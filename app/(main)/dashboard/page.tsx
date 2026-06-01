@@ -6,9 +6,8 @@ export default function Dashboard(){
   return(
     <div className="p-10 w-full">
       <div className="w-ful ">
-        <TerminalInput PageRoute={false} w={100} mt={0}></TerminalInput>
 
-        <div className="grid grid-cols-4 gap-10 mt-10">
+        <div className="grid grid-cols-4 gap-10 ">
           <div className="bg-terminal-bg h-40 border border-terminal-input p-10">
             <p className="text-5xl mb-3 font-semibold text-green-400">47</p>
             <p className="text-xl text-text-tertiary">Resolved</p>
