@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react"
+
 import NewProjectModal from "./NewProjectModal"
 
 type Project = {
@@ -9,37 +10,47 @@ type Project = {
   tags: string[]
 }
 
+type Props = {
+  // 프로젝트 선택 시 해당 프로젝트의 태그 배열을 부모(page.tsx)로 전달하는 콜백
+  onSelectProject: (tags: string[]) => void
+}
 
+// 프로젝트 선택 드롭다운 — 선택, 신규 생성(모달), 태그 표시
+export default function ProjectsToggle({ onSelectProject }: Props) {
+  const [open, setOpen] = useState(false)          // 드롭다운 열림 여부
+  const [modal, setModal] = useState(false)         // 새 프로젝트 모달 열림 여부
+  const [selectedId, setSelectedId] = useState<string | null>(null)  // 현재 선택된 프로젝트 ID
 
-export default function ProjectsToggle() {
-  const [open, setOpen] = useState(false)
-  const [modal, setModal] = useState(false)
-  const [selectedId, setSelectedId] = useState<string | null>(null)
+  // TODO: 추후 API에서 불러올 프로젝트 목록 (현재는 임시 데이터)
+  const [projects, setProjects] = useState<Project[]>([
+    { id: "p_001", name: "Camplog", tags: ["React", "Spring Boot"] },
+  ])
 
-  const [Projects,setProjects]= useState([
-  { id: "p_001", name: "Camplog", tags: ["React", "Spring Boot"] },
-])
+  // 현재 선택된 프로젝트 객체
+  const selected = projects.find(p => p.id === selectedId)
 
-  const selected = Projects.find(p => p.id === selectedId)
-
-
-  function onAdd(name:string,tags:string[]){
-    let newproject = {
+  // 새 프로젝트를 목록에 추가
+  const onAdd = (name: string, tags: string[]) => {
+    const newProject: Project = {
       id: crypto.randomUUID(),
-      name:name,
-      tags:tags
+      name,
+      tags,
     }
-    let copy =[...Projects]
-    copy.push(newproject)
-    setProjects(copy)
+    setProjects([...projects, newProject])
   }
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
 
-      <div className="flex items-center gap-3 px-4 py-4 cursor-pointer border border-border-default text-lg" onClick={() => setOpen(!open)}>
+      {/* 선택된 프로젝트 표시 / 드롭다운 토글 */}
+      <div
+        className="flex items-center gap-3 px-4 py-4 cursor-pointer border border-border-default text-lg"
+        onClick={() => setOpen(!open)}
+      >
         <img src={selected ? "/folder.svg" : "/folder2.svg"} alt="" className="w-5" />
-        <span className="font-mono text-text-secondary">{selected ? selected.name : "프로젝트를 선택하세요"}</span>
+        <span className="font-mono text-text-secondary">
+          {selected ? selected.name : "프로젝트를 선택하세요"}
+        </span>
         {selected && selected.tags.map(tag => (
           <span key={tag} className="px-3 py-1 rounded-full bg-bg-overlay text-text-secondary text-sm">{tag}</span>
         ))}
@@ -47,13 +58,16 @@ export default function ProjectsToggle() {
         <img src="/down-arrow.svg" alt="" className={`w-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </div>
 
+      {/* 프로젝트 목록 드롭다운 */}
       {open && (
         <div className="border border-border-default mt-2">
-          {Projects.map(project => (
+          {projects.map(project => (
             <div
               key={project.id}
-              className={`flex items-center gap-3 px-4 py-4 cursor-pointer border-t border-border-default first:border-t-0 hover:bg-bg-elevated ${project.id === selectedId ? "border-l-2 border-l-primary bg-bg-elevated text-lg" : ""}`}
-              onClick={() => { setSelectedId(project.id); setOpen(false) }}
+              className={`flex items-center gap-3 px-4 py-4 cursor-pointer border-t border-border-default first:border-t-0 hover:bg-bg-elevated ${
+                project.id === selectedId ? "border-l-2 border-l-primary bg-bg-elevated text-lg" : ""
+              }`}
+              onClick={() => { setSelectedId(project.id); onSelectProject(project.tags); setOpen(false) }}
             >
               <img src={project.id === selectedId ? "/folder.svg" : "/folder2.svg"} alt="" className="w-5" />
               <span className="font-mono">{project.name}</span>
@@ -63,6 +77,7 @@ export default function ProjectsToggle() {
             </div>
           ))}
 
+          {/* 새 프로젝트 생성 버튼 — 클릭 시 모달 오픈 */}
           <div
             className="flex items-center gap-2 px-4 py-3 border-t border-border-default text-primary cursor-pointer hover:bg-bg-elevated"
             onClick={() => { setOpen(false); setModal(true) }}
@@ -72,7 +87,8 @@ export default function ProjectsToggle() {
         </div>
       )}
 
-      {modal && <NewProjectModal onAdd={onAdd}  onClose={() => setModal(false)} />}
+      {/* 새 프로젝트 생성 모달 */}
+      {modal && <NewProjectModal onAdd={onAdd} onClose={() => setModal(false)} />}
     </div>
   )
 }

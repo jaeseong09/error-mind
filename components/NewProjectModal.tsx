@@ -2,33 +2,32 @@
 
 import { useState } from "react"
 
+// 프리셋 기술 스택 목록
 const PRESET_TAGS = ["MySQL", "MongoDB", "Next.js", "NestJS", "TypeScript", "React", "Spring Boot", "FastAPI", "Docker"]
-
 
 type Props = {
   onClose: () => void
   onAdd: (name: string, tags: string[]) => void
 }
 
-export default function NewProjectModal({ onClose,onAdd }: Props) {
+// 새 프로젝트 생성 모달 — 이름, 설명, 기술 스택 태그 입력
+export default function NewProjectModal({ onClose, onAdd }: Props) {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [tags, setTags] = useState<string[]>([])
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [customInput, setCustomInput] = useState("")
 
-  const [newProject,setNewProject] = useState({
-    name : name,
-    tags : tags
-  })
-
+  // 프리셋 태그 추가 (중복 방지)
   const addTag = (tag: string) => {
     if (!tags.includes(tag)) setTags([...tags, tag])
     setDropdownOpen(false)
   }
 
+  // 태그 제거
   const removeTag = (tag: string) => setTags(tags.filter(t => t !== tag))
 
+  // 커스텀 태그 추가 — Enter 키 또는 직접 호출
   const addCustomTag = () => {
     if (customInput.trim() && !tags.includes(customInput.trim())) {
       setTags([...tags, customInput.trim()])
@@ -37,6 +36,7 @@ export default function NewProjectModal({ onClose,onAdd }: Props) {
   }
 
   return (
+    // 모달 바깥 클릭 시 닫기
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 font-mono" onClick={onClose}>
       <div className="bg-bg-surface border border-border-default rounded-xl w-full max-w-xl p-8" onClick={e => e.stopPropagation()}>
 
@@ -49,7 +49,7 @@ export default function NewProjectModal({ onClose,onAdd }: Props) {
           <button className="text-text-tertiary hover:text-text-primary text-lg" onClick={onClose}>✕</button>
         </div>
 
-        {/* project_name */}
+        {/* 프로젝트명 입력 (필수) */}
         <div className="mb-5">
           <p className="font-mono text-base text-text-tertiary mb-2">
             <span className="text-primary mr-2">❯</span>project_name
@@ -62,7 +62,7 @@ export default function NewProjectModal({ onClose,onAdd }: Props) {
           />
         </div>
 
-        {/* description */}
+        {/* 설명 입력 (선택) */}
         <div className="mb-5">
           <p className="font-mono text-base text-text-tertiary mb-2">
             <span className="text-primary mr-2">❯</span>description
@@ -76,13 +76,13 @@ export default function NewProjectModal({ onClose,onAdd }: Props) {
           />
         </div>
 
-        {/* tech_stack */}
+        {/* 기술 스택 태그 선택 */}
         <div className="mb-7">
           <p className="font-mono text-base text-text-tertiary mb-2">
             <span className="text-primary mr-2">❯</span>tech_stack
           </p>
 
-          {/* 태그 입력 영역 */}
+          {/* 선택된 태그 목록 + 추가 버튼 */}
           <div className="bg-bg-elevated border border-terminal-input px-4 py-3 flex flex-wrap gap-2 items-center">
             {tags.map(tag => (
               <span key={tag} className="flex items-center gap-1 px-3 py-1 rounded-full bg-primary/30 text-primary text-base font-mono">
@@ -95,7 +95,7 @@ export default function NewProjectModal({ onClose,onAdd }: Props) {
             </button>
           </div>
 
-          {/* 드롭다운 */}
+          {/* 프리셋 태그 드롭다운 + 커스텀 태그 입력 */}
           {dropdownOpen && (
             <div className="border border-terminal-input mt-1 bg-bg-elevated max-h-48 overflow-y-auto">
               {PRESET_TAGS.filter(t => !tags.includes(t)).map(tag => (
@@ -107,6 +107,7 @@ export default function NewProjectModal({ onClose,onAdd }: Props) {
                   {tag}
                 </div>
               ))}
+              {/* 커스텀 태그 직접 입력 */}
               <div className="px-4 py-3 border-t border-border-default flex items-center gap-2">
                 <span className="text-primary text-base font-mono">+ Custom:</span>
                 <input
@@ -121,15 +122,18 @@ export default function NewProjectModal({ onClose,onAdd }: Props) {
           )}
         </div>
 
-        {/* 버튼 */}
+        {/* 생성 / 취소 버튼 */}
         <div className="flex gap-3">
-          <button onClick={()=>{
-            onAdd(name,tags);
-            onClose()
-          }} className="flex-1 h-13 bg-primary hover:bg-primary-hover font-mono text-base rounded-lg">
+          <button
+            onClick={() => { onAdd(name, tags); onClose() }}
+            className="flex-1 h-13 bg-primary hover:bg-primary-hover font-mono text-base rounded-lg"
+          >
             + Create project
           </button>
-          <button className="px-8 h-13 bg-bg-elevated border border-terminal-input text-text-secondary hover:text-text-primary font-mono text-base rounded-lg" onClick={onClose}>
+          <button
+            onClick={onClose}
+            className="px-8 h-13 bg-bg-elevated border border-terminal-input text-text-secondary hover:text-text-primary font-mono text-base rounded-lg"
+          >
             Cancel
           </button>
         </div>
