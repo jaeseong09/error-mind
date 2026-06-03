@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ErrorMind
 
-## Getting Started
+> 개발자 에러 해결 & 추천 시스템
 
-First, run the development server:
+개발 중 마주치는 에러를 기록하고, AI가 자동으로 분류·분석합니다.  
+이전에 같은 에러를 겪은 적 있다면 바로 알려드립니다.
+
+---
+
+## 주요 기능
+
+- **에러 등록** — 에러 메시지를 붙여넣으면 AI가 자동으로 카테고리·심각도·태그 분류
+- **AI 힌트** — GPT-4o-mini 기반 원인 추론 + 단계별 해결 방향 제시
+- **내 해결 메모** — 직접 해결한 내용을 마크다운으로 기록
+- **에러 히스토리** — 프로젝트별 에러 이력 축적 및 중복 에러 감지
+- **개인화 추천** — 내 기술 스택과 이력 기반 유사 에러 추천
+
+## 기술 스택
+
+| 영역 | 기술 |
+|---|---|
+| Frontend | Next.js 14 (App Router), TypeScript, Tailwind CSS, Zustand |
+| Backend | NestJS, TypeScript, Mongoose, Passport.js (JWT + OAuth) |
+| DB | MongoDB Atlas |
+| AI | OpenAI GPT-4o-mini |
+| Infra | AWS EC2, S3, Docker, GitHub Actions |
+
+## 로컬 실행
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`http://localhost:3000` 접속
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 프로젝트 구조
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+  (main)/
+    dashboard/       # 대시보드
+    errors/
+      new/           # 에러 등록 페이지
+      [id]/          # 에러 상세 페이지
+components/          # 공통 컴포넌트
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+포트폴리오 목적으로 1인 풀스택 개발 중입니다.
