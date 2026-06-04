@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 
+import SolutionEditor from '@/components/SolutionEditor'
+
 /**
  * 에러 상세 페이지
  * - 브레드크럼 네비게이션 (Dashboard → 에러 ID)
@@ -125,24 +127,7 @@ export default function Detail() {
         </div>
       </div>
 
-      {/* ── 내 해결 메모 에디터 ───────────────────────────────────────
-          툴바: Bold(B) / Code(<>) / Table / Preview 토글
-          TODO: 실제 에디터 라이브러리 연동 (TipTap 또는 react-markdown-editor)
-      */}
-      <div className="bg-bg-elevated p-5 mt-10 border border-l-3 border-l-violet-500 border-gray-700">
-        <div className='flex items-center'>
-          <img className='w-5 mr-3' src="/pen.svg" alt="" />
-          <p className='text-lg'>My solution</p>
-
-          {/* 에디터 툴바 버튼 그룹 */}
-          <div className='flex ml-auto gap-3 '>
-            <div className='bg-gray-800 px-3 py-1 text-sm rounded-md text-[#52525B] font-semibold'>B</div>
-            <div className='bg-gray-800 px-3 py-1 text-sm rounded-md'><img src="/code.svg" className='w-5' alt="" /></div>
-            <div className='flex bg-gray-800 px-3 py-1 text-sm rounded-md items-center justify-center'><img src="/table.svg" className='w-4' alt="" /></div>
-            <div className='flex items-center justify-center bg-gray-800 px-3 py-1 text-sm rounded-md text-[#52525B]'><img src="/eye-gray.svg" className='w-5 mr-1' alt="" />Preview</div>
-          </div>
-        </div>
-      </div>
+      <SolutionEditor />
     </div>
   )
 }
