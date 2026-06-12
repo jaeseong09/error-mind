@@ -19,7 +19,7 @@ export default function Errors() {
       <p className="text-4xl font-mono mb-1">
         <span className="text-3xl text-primary mr-2">❯</span>New error report
       </p>
-      <p className="pl-10 text-text-tertiary mb-10">에러를 붙여넣으면 AI가 분석하고, 프로젝트에 기록합니다</p>
+      <p className="pl-7 text-text-tertiary mb-10">에러를 붙여넣으면 AI가 분석하고, 프로젝트에 기록합니다</p>
 
       {/* 프로젝트 선택 — 선택 시 해당 프로젝트 태그가 setTags로 올라와 TagInput에 자동 반영됨 */}
       <p className="text-text-tertiary text-xl font-mono mb-2">
@@ -62,17 +62,15 @@ export default function Errors() {
           <div className="flex gap-3">
             <div
               onClick={() => setVisibility("Public")}
-              className={`w-1/2 items-center justify-center text-center border p-3 ${
-                visibility === "Public" ? "border-primary text-primary" : "border-terminal-input"
-              }`}
+              className={`w-1/2 items-center justify-center text-center border p-3 ${visibility === "Public" ? "border-primary text-primary" : "border-terminal-input"
+                }`}
             >
               <p>Public</p>
             </div>
             <div
               onClick={() => setVisibility("Private")}
-              className={`w-1/2 items-center justify-center text-center border p-3 ${
-                visibility === "Private" ? "border-primary text-primary" : "border-terminal-input"
-              }`}
+              className={`w-1/2 items-center justify-center text-center border p-3 ${visibility === "Private" ? "border-primary text-primary" : "border-terminal-input"
+                }`}
             >
               <p>Private</p>
             </div>

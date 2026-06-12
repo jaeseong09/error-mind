@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -13,6 +13,19 @@ export default function SolutionEditor() {
   const [text, setText] = useState('');
   const [focus, setFocus] = useState(false)
   const [isPreview, setIsPreview] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const wrap = (before: string, after: string) => {
+    const el = textareaRef.current
+    if (!el) return
+    const start = el.selectionStart
+    const end = el.selectionEnd
+    const selected = text.substring(start, end)
+    const newText = text.substring(0, start) + before + selected + after + text.substring(end)
+    setText(newText)
+
+    setTimeout(() => el.setSelectionRange(start + before.length, end + before.length), 0)
+  }
+
   return (
     <div className="bg-bg-elevated p-5 mt-10 border border-l-3 border-l-violet-500 border-gray-700">
       <div className='flex items-center'>
@@ -22,9 +35,20 @@ export default function SolutionEditor() {
 
         {/* 에디터 툴바 버튼 그룹 */}
         <div className='flex ml-auto gap-3 '>
-          <div className='bg-gray-800 px-3 py-1 text-sm rounded-md text-[#52525B] font-semibold'>B</div>
-          <div className='bg-gray-800 px-3 py-1 text-sm rounded-md'><img src="/code.svg" className='w-5' alt="" /></div>
-          <div className='flex bg-gray-800 px-3 py-1 text-sm rounded-md items-center justify-center'><img src="/table.svg" className='w-4' alt="" /></div>
+          <div onClick={() => { wrap('**', '**') }} className='bg-gray-800 px-3 py-1 text-sm rounded-md text-[#52525B] font-semibold'>B</div>
+          <div onClick={() => { wrap('`', '`') }} className='flex items-center justify-center bg-gray-800 px-3 py-1 text-sm rounded-md cursor-pointer'>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+              <path d="M7 6L3 10L7 14" stroke="#52525B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M13 6L17 10L13 14" stroke="#52525B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div onClick={() => { wrap('```\n', '\n```') }} className='flex items-center justify-center bg-gray-800 px-3 py-1 text-sm rounded-md cursor-pointer'>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+              <rect x="2" y="4" width="16" height="12" rx="2" stroke="#52525B" strokeWidth="1.5"/>
+              <path d="M2 8H18" stroke="#52525B" strokeWidth="1.5"/>
+              <path d="M5 12H9" stroke="#52525B" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+          </div>
           <div onClick={() => { setIsPreview(!isPreview) }} className='flex items-center justify-center bg-gray-800 px-3 py-1 text-sm rounded-md text-[#52525B]'><img src="/eye-gray.svg" className='w-5 mr-1' alt="" />Preview</div>
         </div>
       </div>
@@ -33,7 +57,7 @@ export default function SolutionEditor() {
         {
           !isPreview ?
             <>
-              <textarea onKeyDown={(e) => {
+              <textarea ref={textareaRef} onKeyDown={(e) => {
                 if (e.key === 'Tab') {
                   e.preventDefault()
                   const el = e.currentTarget
